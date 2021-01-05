@@ -1,0 +1,4 @@
+70f218ecb20fe596d0b1b6e14df763dc50c3f151  wkhtmltox_0.12.6-1.raspberrypi.buster_armhf.deb
+d9f259a67e05e1c221d48b504453645e6c491fab  wkhtmltox_0.12.6-1.buster_amd64.deb
+43d0db99ab0e6b5f60b465a49c764c50d6b31337  wkhtmltox_0.12.6-1.buster_arm64.deb
+cd893ce96b3bf7e3448f2414f4537685f521acd8  odoo.deb
