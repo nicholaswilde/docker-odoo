@@ -35,7 +35,7 @@ The simplest `docker-compose.yml` file would be:
 version: '2'
 services:
   web:
-    image: odoo:12.0
+    image: odoo:14.0-ls1
     depends_on:
       - db
     ports:
@@ -54,7 +54,7 @@ If the default postgres credentials does not suit you, tweak the environment var
 version: '2'
 services:
   web:
-    image: nicholaswilde/odoo:14.0
+    image: nicholaswilde/odoo:14.0-ls1
     depends_on:
       - mydb
     ports:
