@@ -76,7 +76,7 @@ jobs:
           push: true
           build-args: |
             ODOO_VERSION=14.0
-            ODOO_RELEASE=
+            ODOO_RELEASE=20201218
           tags: |
             nicholaswilde/odoo:latest
             nicholaswilde/odoo:${{ github.event.inputs.version }}
