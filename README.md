@@ -9,17 +9,21 @@
 
 A multi architecture image of [Odoo](https://www.odoo.com/).
 
-# Usage
+## Dependencies
+
+* postgres
+
+## Usage
 
 This image requires a running PostgreSQL server.
 
-## Start a PostgreSQL server
+# Start a PostgreSQL server
 
 ```console
 $ docker run -d -e POSTGRES_USER=odoo -e POSTGRES_PASSWORD=odoo -e POSTGRES_DB=postgres --name db postgres:10
 ```
 
-## Start an Odoo instance
+# Start an Odoo instance
 
 ```console
 $ docker run -p 8069:8069 --name nicholaswilde/odoo --link db:db -t odoo
@@ -27,7 +31,7 @@ $ docker run -p 8069:8069 --name nicholaswilde/odoo --link db:db -t odoo
 
 The alias of the container running Postgres must be db for Odoo to be able to connect to the Postgres server.
 
-## Docker Compose examples
+# Docker Compose examples
 
 The simplest `docker-compose.yml` file would be:
 
@@ -105,6 +109,13 @@ To start your Odoo instance, go in the directory of the `docker-compose.yml` fil
 ```console
 docker-compose up -d
 ```
+## Development
+
+See [Wiki](https://github.com/nicholaswilde/docker-template/wiki/Development).
+
+## Troubleshooting
+
+See [Wiki](https://github.com/nicholaswilde/docker-template/wiki/Troubleshooting).
 
 ## Pre-commit hook
 
