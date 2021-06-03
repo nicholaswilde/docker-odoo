@@ -12,13 +12,13 @@ RUN \
   echo "**** install packages ****" && \
   apt-get update && \
   apt-get install -y --no-install-recommends \
-    ca-certificates=20190110 \
-    curl=7.64.0-4+deb10u1 \
+    ca-certificates=20200601~deb10u2 \
+    curl=7.64.0-4+deb10u2 \
     dirmngr=2.2.12-1+deb10u1 \
     fontconfig=2.13.1-2 \
     fonts-noto-cjk=1:20170601+repack1-3+deb10u1 \
     gnupg=2.2.12-1+deb10u1 \
-    libssl-dev=1.1.1d-0+deb10u4 \
+    libssl-dev=1.1.1d-0+deb10u6 \
     libx11-6=2:1.6.7-1+deb10u1 \
     libxext6=2:1.3.3-1+b2 \
     libxrender1=1:0.9.10-1 \
@@ -48,7 +48,7 @@ FROM base as base_amd64
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   echo "**** download wkhtmltox package ****" && \
-  wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb && \
+  wget -q https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_amd64.deb && \
   sha1sum ./wkhtmltox_0.12.6-1.buster_amd64.deb | sha1sum -c ./checksums.txt --ignore-missing || if [[ "$?" -eq "141" ]]; then true; else exit $?; fi && \
   mv ./wkhtmltox_0.12.6-1.buster_amd64.deb ./wkhtmltox.deb
 
@@ -56,7 +56,7 @@ FROM base as base_arm64
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   echo "**** download wkhtmltox package ****" && \
-  wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_arm64.deb && \
+  wget -q https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.buster_arm64.deb && \
   sha1sum ./wkhtmltox_0.12.6-1.buster_arm64.deb | sha1sum -c ./checksums.txt --ignore-missing || if [[ $? -eq 141 ]]; then true; else exit $?; fi && \
   mv ./wkhtmltox_0.12.6-1.buster_arm64.deb ./wkhtmltox.deb
 
@@ -64,7 +64,7 @@ FROM base as base_arm
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   echo "**** download wkhtmltox package ****" && \
-  wget https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.raspberrypi.buster_armhf.deb && \
+  wget -q https://github.com/wkhtmltopdf/packaging/releases/download/0.12.6-1/wkhtmltox_0.12.6-1.raspberrypi.buster_armhf.deb && \
   sha1sum ./wkhtmltox_0.12.6-1.raspberrypi.buster_armhf.deb | sha1sum -c ./checksums.txt --ignore-missing || if [[ $? -eq 141 ]]; then true; else exit $?; fi && \
   mv ./wkhtmltox_0.12.6-1.raspberrypi.buster_armhf.deb ./wkhtmltox.deb
 
@@ -94,12 +94,14 @@ RUN \
   npm install -g rtlcss
 
 # Install Odoo
-ENV ODOO_VERSION 14.0
-ARG ODOO_RELEASE=20201218
+ARG VERSION
+ARG RELEASE
+ARG CHECKSUM
+SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 RUN \
   echo "**** install odoo ****" && \
-  curl -o odoo.deb -sSL http://nightly.odoo.com/${ODOO_VERSION}/nightly/deb/odoo_${ODOO_VERSION}.${ODOO_RELEASE}_all.deb && \
-  #sha1sum odoo.deb | sha1sum -c ./checksums.txt --ignore-missing || if [[ $? -eq 141 ]]; then true; else exit $?; fi && \
+  curl -o odoo.deb -sSL http://nightly.odoo.com/${VERSION}/nightly/deb/odoo_${VERSION}.${RELEASE}_all.deb && \
+  echo "${CHECKSUM}  odoo.deb" | sha256sum -c && \
   apt-get update && \
   apt-get -y install --no-install-recommends ./odoo.deb && \
   rm -rf /var/lib/apt/lists/* odoo.deb
