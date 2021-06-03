@@ -18,6 +18,7 @@ on:
       - 'Dockerfile'
       - 'LS'
       - 'VERSION'
+      - 'RELEASE'
   push:
     branches:
       - main
@@ -25,6 +26,7 @@ on:
       - 'Dockerfile'
       - 'LS'
       - 'VERSION'
+      - 'RELEASE'
 
 env:
   # How long to sleep before running the tests (gives the application time to start)
@@ -73,11 +75,11 @@ jobs:
           else
             echo ::set-output name=goss::false
           fi
-          #if [ "${{github.event_name}}" == "pull_request" ]; then
+          if [ "${{github.event_name}}" == "pull_request" ]; then
             echo ::set-output name=push::false
-          #else
-            #echo ::set-output name=push::true
-          #fi
+          else
+            echo ::set-output name=push::true
+          fi
 
   tag-does-not-exist:
     runs-on: ubuntu-latest
