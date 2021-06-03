@@ -35,6 +35,7 @@ jobs:
     runs-on: ubuntu-latest
     outputs:
       version: ${{ steps.prep.outputs.version }}
+      release: ${{ steps.prep.outputs.release }}
       checksum: ${{ steps.prep.outputs.checksum }}
       ls: ${{ steps.prep.outputs.ls }}
       goss: ${{ steps.prep.outputs.goss }}
@@ -51,6 +52,8 @@ jobs:
       - name: Prepare
         id: prep
         run: |
+          RELEASE=$(cat ./RELEASE)
+          echo ::set-output name=release::${RELEASE}
           VERSION=$(cat ./VERSION)
           echo ::set-output name=version::${VERSION}
           LS=$(cat ./LS)
@@ -139,6 +142,7 @@ jobs:
           build-args: |
             VERSION=${{ needs.prep.outputs.version }}
             CHECKSUM=${{ needs.prep.outputs.checksum }}
+            RELEASE=${{ needs.prep.outputs.release }}
           context: .
           file: ./Dockerfile
           load: true
@@ -189,6 +193,7 @@ jobs:
             BUILD_DATE=${{ needs.prep.outputs.date }}
             VERSION=${{ needs.prep.outputs.version }}
             CHECKSUM=${{ needs.prep.outputs.checksum }}
+            RELEASE=${{ needs.prep.outputs.release }}
           tags: |
             ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:latest
             ${{ github.repository_owner }}/${{needs.prep.outputs.repo_name}}:${{needs.prep.outputs.tag}}
