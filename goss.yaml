@@ -1,0 +1,14 @@
+---
+port:
+  tcp:8069:
+    listening: true
+
+process:
+  odoo:
+    running: true
+
+http:
+  http://localhost:8069/web/database/selector:
+    status: 200
+    body:
+      - <title>Odoo</title>
