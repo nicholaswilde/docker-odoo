@@ -5,7 +5,7 @@ tasks:
   run:
     desc: Run dgoss
     cmds:
-      - "{{ .DGOSS_RUN }} {{ .TAG_VERSION }}"
+      - "{{ .DGOSS_RUN }}"
     preconditions:
       - docker images -q {{ .TAG_VERSION }} 2> /dev/null
 

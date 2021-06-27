@@ -19,7 +19,7 @@ RUN \
     fonts-noto-cjk=1:20170601+repack1-3+deb10u1 \
     gnupg=2.2.12-1+deb10u1 \
     libssl-dev=1.1.1d-0+deb10u6 \
-    libx11-6=2:1.6.7-1+deb10u1 \
+    libx11-6=2:1.6.7-1+deb10u2 \
     libxext6=2:1.3.3-1+b2 \
     libxrender1=1:0.9.10-1 \
     node-less=1.6.3~dfsg-3 \

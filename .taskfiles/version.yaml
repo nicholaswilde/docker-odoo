@@ -9,7 +9,7 @@ tasks:
       - printf %s {{ .VERSION }}
     vars:
       VERSION:
-        sh: curl -sX GET {{ .API_URL }} | jq --raw-output '.tag_name'
+        sh: curl -sX GET {{ .API_URL }} | jq --raw-output '.default_branch'
 
   export:
     desc: Export the latest app version to VERSION
@@ -17,4 +17,4 @@ tasks:
       - printf "%s" "{{ .VERSION }}" > VERSION
     vars:
       VERSION:
-        sh: curl -sX GET {{ .API_URL }} | jq --raw-output '.tag_name'
+        sh: curl -sX GET {{ .API_URL }} | jq --raw-output '.default_branch'

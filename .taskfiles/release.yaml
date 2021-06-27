@@ -1,0 +1,20 @@
+---
+version: '3'
+
+tasks:
+  print:
+    desc: Print the latest app release
+    silent: true
+    cmds:
+      - printf %s {{ .RELEASE }}
+    vars:
+      RELEASE:
+        sh: curl -sX GET {{ .RELEASE_URL }} | yq e '.Version' - | sed 's/.*\.//'
+
+  export:
+    desc: Export the latest app release to RELEASE
+    cmds:
+      - printf "%s" "{{ .RELEASE }}" > RELEASE
+    vars:
+      RELEASE:
+        sh: curl -sX GET {{ .RELEASE_URL }} | yq e '.Version' - | sed 's/.*\.//'

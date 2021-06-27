@@ -24,11 +24,12 @@ vars:
   TAG_LATEST: "{{ .NS }}/{{ .IMAGE_NAME }}:latest"
   CONTAINER: "{{ .CONTAINER_NAME }}-{{ .CONTAINER_INSTANCE }}"
   RUN: "docker run -it --rm --name {{ .CONTAINER_NAME }}-{{ .CONTAINER_INSTANCE }} {{ .ENV }} {{ .PORTS }}"
-  DGOSS_RUN: "dgoss run -it --rm --name {{ .CONTAINER_NAME }}-{{ .CONTAINER_INSTANCE }} {{ .ENV }} {{ .PORTS }}"
+  DGOSS_RUN: "dcgoss run web"
   DGOSS_EDIT: "dgoss edit -it --rm --name {{ .CONTAINER_NAME }}-{{ .CONTAINER_INSTANCE }} {{ .ENV }} {{ .PORTS }}"
   EXEC: "docker exec -it {{ .CONTAINER }}"
   BUILD: "docker buildx build {{ .BUILD_ARGS }} -t"
-  API_URL: "https://api.github.com/repos/{{ .SOURCE_ORG }}/{{ .SOURCE_REPO }}/releases/latest"
+  API_URL: "https://api.github.com/repos/{{ .SOURCE_ORG }}/{{ .SOURCE_REPO }}"
+  RELEASE_URL: "http://nightly.{{ .SOURCE_ORG }}.com/{{ .VERSION }}/nightly/deb/Packages"
 
 includes:
   build: ./.taskfiles/build.yaml
@@ -41,6 +42,7 @@ includes:
   load: ./.taskfiles/load.yaml
   ls: ./.taskfiles/ls.yaml
   pkgs: ./.taskfiles/pkgs.yaml
+  release: ./.taskfiles/release.yaml
   run: ./.taskfiles/run.yaml
   shell: ./.taskfiles/shell.yaml
   snyk: ./.taskfiles/snyk.yaml
